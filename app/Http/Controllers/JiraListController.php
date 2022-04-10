@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\File;
 use Illuminate\Http\Request;
 use App\Models\ListItem;
 use Illuminate\Support\Facades\Log;
@@ -16,7 +17,7 @@ class JiraListController extends Controller
     const TICKET_OPEN = 1;
 
     public function index() {
-        return view('welcome', ['listItems' => ListItem::all()]);
+        return view('welcome', ['listItems' => ListItem::all(), 'files' => File::all()]);
         //return view('welcome', ['listItems' => ListItem::where('is_open', self::TICKET_OPEN)->get()]);
     }
 
@@ -76,6 +77,7 @@ class JiraListController extends Controller
            $newListItem = new ListItem();
            $newListItem->title = $request->title;
            $newListItem->description = $request->description;
+           $newListItem->fileId = $request->fileId;
            $newListItem->is_open = self::TICKET_OPEN;
            $newListItem->save();
        }
@@ -83,4 +85,9 @@ class JiraListController extends Controller
 
        return redirect('/');
    }
+
+    public function ticket(){
+
+        return view('welcome');
+    }
 }

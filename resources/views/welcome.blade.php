@@ -27,11 +27,14 @@
 
             <h2>Open Jiras</h2>
 
+
+
             @foreach($listItems as $listItem)
                 @if($listItem->is_open == 1)
                 <div class="flex" style="align-items: center">
                     <p>Title: {{ $listItem->title }}</p>
                     <p>Description: {{ $listItem->description }}</p>
+                    <p>FileId: {{ $listItem->fileId }}</p>
                     <form method="post" action="{{ route('markClose', $listItem->id) }}" accept-charset="UTF-8">
                         {{ csrf_field() }}
                         <button type="submit" style="max-height: 25px; margin-left: 20px;">Mark Close</button>
@@ -83,7 +86,38 @@
                 <label for="listItem">New Jira Issue</label> <br>
                 <input type="text" name="title">
                 <input type="text" name="description">
+                <label>Files: </label> <br>
+                <select class="form-control m-bot15" name="fileId">
+                    @if($files->count() > 0)
+                        @foreach($files as $file)
+                            <option value="{{$file->id}}">{{$file->name}}</option>
+                        @endForeach
+                    @else
+                        No Record Found
+                    @endif
+                </select>
                 <button type="submit">Create new ticket</button>
+            </form>
+
+
+
+            <h2>Upload files to Jira</h2>
+            <form method="post" action="{{ route('store') }}" enctype="multipart/form-data" id="upload-file" >
+                {{ csrf_field() }}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="file" name="file" placeholder="Choose file" id="file">
+                            @error('file')
+                            <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+                    </div>
+                </div>
             </form>
 
         </div>

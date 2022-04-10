@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JiraListController;
+use App\Http\Controllers\FileUploadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +24,8 @@ Route::post('/markCloseRoute/{id}',  [JiraListController::class, 'markClose'])->
 Route::post('/markDeleteRoute/{id}',  [JiraListController::class, 'markDelete'])->name('markDelete');
 Route::post('/markOpenRoute/{id}',  [JiraListController::class, 'markOpen'])->name('markOpen');
 
+
+Route::post('/storeRoute', [FileUploadController::class, 'store'])->name('store');
+
+
+Route::get('/ticketRoute', [JiraListController::class, 'ticket'])->name('ticket');
