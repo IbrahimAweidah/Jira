@@ -63,17 +63,24 @@
                         <p>Status: Closed</p>
                     @endif
 
-                    <form method="post" action="{{ route('markClose', $listItem->id) }}" accept-charset="UTF-8">
-                        {{ csrf_field() }}
-                        <button type="submit" style="max-height: 25px; margin-left: 20px;">Mark Close</button>
-                    </form>
                     <form method="post" action="{{ route('markDelete', $listItem->id) }}" accept-charset="UTF-8">
                         {{ csrf_field() }}
                         <button type="submit" style="max-height: 25px; margin-left: 20px;">Delete</button>
                     </form>
-                    <form method="post" action="{{ route('markOpen', $listItem->id) }}" accept-charset="UTF-8">
+                    @if($listItem->is_open)
+                        <form method="post" action="{{ route('markClose', $listItem->id) }}" accept-charset="UTF-8">
+                            {{ csrf_field() }}
+                            <button type="submit" style="max-height: 25px; margin-left: 20px;">Mark Close</button>
+                        </form>
+                    @else
+                        <form method="post" action="{{ route('markOpen', $listItem->id) }}" accept-charset="UTF-8">
+                            {{ csrf_field() }}
+                            <button type="submit" style="max-height: 25px; margin-left: 20px;">Mark Open</button>
+                        </form>
+                    @endif
+                    <form method="post" action="{{ route('editItem', $listItem->id) }}" accept-charset="UTF-8">
                         {{ csrf_field() }}
-                        <button type="submit" style="max-height: 25px; margin-left: 20px;">Mark Open</button>
+                        <button type="submit" style="max-height: 25px; margin-left: 20px;">Edit</button>
                     </form>
                 </div>
             @endforeach

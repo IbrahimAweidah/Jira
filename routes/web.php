@@ -16,10 +16,10 @@ use App\Http\Controllers\FileUploadController;
 */
 
 Route::get('/', [JiraListController::class, 'index']);
+Route::post('/editItemRoute/{id}',  [JiraListController::class, 'editItem'])->name('editItem');
 
 
 Route::post('/saveItemRoute',  [JiraListController::class, 'saveItem'])->name('saveItem');
-
 Route::post('/markCloseRoute/{id}',  [JiraListController::class, 'markClose'])->name('markClose');
 Route::post('/markDeleteRoute/{id}',  [JiraListController::class, 'markDelete'])->name('markDelete');
 Route::post('/markOpenRoute/{id}',  [JiraListController::class, 'markOpen'])->name('markOpen');
@@ -28,4 +28,3 @@ Route::post('/markOpenRoute/{id}',  [JiraListController::class, 'markOpen'])->na
 Route::post('/storeRoute', [FileUploadController::class, 'store'])->name('store');
 
 
-Route::get('/ticketRoute', [JiraListController::class, 'ticket'])->name('ticket');

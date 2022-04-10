@@ -65,6 +65,17 @@ class JiraListController extends Controller
         return redirect('/');
     }
 
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function editItem($id)
+    {
+        Log::info($id);
+        return view('edititem', ['listItems' => ListItem::where('id', $id)->get(), 'files' => File::all()]);
+    }
+
     /**
      * Saves the item if there is a value. Todo: Show an error to the user if there is no value?
      * @param Request $request
@@ -72,12 +83,16 @@ class JiraListController extends Controller
      */
     public function saveItem(Request $request){
        //Log::info(json_encode($request->all()));
+        $fileId = $request->fileId;
+        if(!isset($request->fileId)){
+            $fileId = 0;
+        }
 
        if(!empty($request->title) && !empty($request->description)){
            $newListItem = new ListItem();
            $newListItem->title = $request->title;
            $newListItem->description = $request->description;
-           $newListItem->fileId = $request->fileId;
+           $newListItem->fileId = $fileId;
            $newListItem->is_open = self::TICKET_OPEN;
            $newListItem->save();
        }
@@ -85,9 +100,4 @@ class JiraListController extends Controller
 
        return redirect('/');
    }
-
-    public function ticket(){
-
-        return view('welcome');
-    }
 }
